@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>调研报告模板</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+/* ================================================================
+   DESIGN SYSTEM v3 — Warm Gray + Dark Green · Consulting Whitepaper
+   10+ Chart Types · 6 Innovative Components · Plain-Text Markup
+   ================================================================ */
+:root{
+  --bg-deep:#faf8f5; --bg-card:#f5f2ed; --bg-card-alt:#ede8e0; --bg-surface:#e8e3da;
+  --text-primary:#1a1a1a; --text-secondary:#5c5c5c; --text-muted:#8c8c8c;
+  --purple:#2d5a4b; --purple-glow:rgba(45,90,75,.08); --gold:#c9a962; --gold-glow:rgba(201,169,98,.10);
+  --xy:#e07040; --xy-dark:#c0552a; --xy-glow:rgba(224,112,64,.10);
+  --jd:#c0392b; --jd-dark:#96281b; --jd-glow:rgba(192,57,43,.10);
+  --tm:#6c3cb0; --tm-dark:#4e2a80; --tm-glow:rgba(108,60,176,.10);
+  --green:#2d7d4f; --green-glow:rgba(45,125,79,.10); --red:#c0392b; --amber:#b8860b;
+  --border:#d9d3c8; --radius:4px; --radius-lg:8px;
+  --font-heading:clamp(26px,3.2vw,36px); --font-section:clamp(18px,2.2vw,24px);
+  --font-body:15px; --font-small:13px; --font-caption:11px;
+  --font-serif:Georgia,"Times New Roman","Noto Serif SC","Source Han Serif SC",serif;
+  --transition:0.2s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:60px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;background:var(--bg-deep);color:var(--text-primary);font-size:var(--font-body);line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ═══ NAV ═══ */
+.nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(250,248,245,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1040px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:0 24px;height:52px;overflow-x:auto}
+.nav-inner::-webkit-scrollbar{height:0}
+.nav-brand{font-weight:700;font-size:12px;color:var(--purple);white-space:nowrap;margin-right:16px;letter-spacing:.5px;font-family:var(--font-serif)}
+.nav a{color:var(--text-muted);text-decoration:none;font-size:11.5px;font-weight:500;white-space:nowrap;padding:5px 10px;border-radius:3px;transition:all .15s ease}
+.nav a:hover{color:var(--text-primary);background:var(--bg-card)}
+.nav a.active{color:var(--purple);background:var(--gold-glow)}
+
+/* ═══ HERO ═══ */
+.hero{position:relative;padding:100px 24px 64px;text-align:center;overflow:hidden;background:linear-gradient(180deg,var(--bg-card) 0%,var(--bg-deep) 100%);border-bottom:1px solid var(--border)}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--gold),var(--purple));opacity:.6}
+.hero h1{font-size:clamp(28px,4.5vw,44px);font-weight:700;color:var(--text-primary);position:relative;letter-spacing:-.5px;margin-bottom:12px;line-height:1.25;font-family:var(--font-serif)}
+.hero .sub{font-size:clamp(14px,1.6vw,16px);color:var(--text-secondary);position:relative;margin-bottom:24px;font-style:italic}
+.hero-tags{display:flex;justify-content:center;gap:12px;position:relative;flex-wrap:wrap}
+.hero-tag{padding:6px 20px;border-radius:3px;font-weight:600;font-size:12px;letter-spacing:.5px;color:#fff}
+.hero-tag.xy{background:var(--xy)}.hero-tag.jd{background:var(--jd)}.hero-tag.tm{background:var(--tm)}
+.hero-date{margin-top:28px;color:var(--text-muted);font-size:12px;position:relative;letter-spacing:1px;text-transform:uppercase}
+.hero-scroll{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);opacity:.3}
+.hero-scroll span{display:block;width:16px;height:16px;border-right:1.5px solid var(--purple);border-bottom:1.5px solid var(--purple);transform:rotate(45deg);animation:pulse-fade 2.4s ease-in-out infinite}
+@keyframes pulse-fade{0%,100%{opacity:.2;transform:rotate(45deg)translate(0,0)}50%{opacity:.6;transform:rotate(45deg)translate(3px,3px)}}
+
+/* ═══ CONTAINER ═══ */
+.container{max-width:1040px;margin:0 auto;padding:0 28px}
+.section{padding:56px 0;position:relative}
+.section-header{position:relative;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.section-num{font-size:56px;font-weight:700;line-height:1;color:rgba(45,90,75,.04);letter-spacing:-.03em;user-select:none;position:absolute;top:-24px;left:-2px;z-index:0;pointer-events:none;font-family:var(--font-serif)}
+.section-title{font-size:var(--font-heading);font-weight:700;margin-bottom:6px;color:var(--text-primary);line-height:1.2;position:relative;z-index:1;font-family:var(--font-serif)}
+.section-desc{color:var(--text-secondary);font-size:14px;max-width:680px;line-height:1.7;position:relative;z-index:1}
+.section-divider{width:32px;height:2px;background:var(--purple);margin:14px 0 0;opacity:.7}
+
+/* ═══ CARDS ═══ */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:var(--transition)}
+.card:hover{border-color:#c0b9a8;transform:translateY(-1px);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 14px 18px;text-align:center;position:relative;overflow:hidden;transition:var(--transition)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform-origin:top;transition:transform .2s ease}
+.kpi-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.kpi-card:hover::before{transform:scaleY(1.5)}
+.kpi-card .kpi-num{font-size:var(--font-heading);font-weight:700;margin:4px 0 0;font-variant-numeric:tabular-nums;font-family:var(--font-serif)}
+.kpi-card .kpi-label{font-size:var(--font-caption);color:var(--text-muted);font-weight:500;letter-spacing:.5px}
+.kpi-card.xy::before{background:var(--xy)}.kpi-card.xy .kpi-num{color:var(--xy)}
+.kpi-card.jd::before{background:var(--jd)}.kpi-card.jd .kpi-num{color:var(--jd)}
+.kpi-card.tm::before{background:var(--tm)}.kpi-card.tm .kpi-num{color:var(--tm)}
+.kpi-card.gen::before{background:var(--purple)}.kpi-card.gen .kpi-num{color:var(--purple)}
+
+/* Chart */
+.chart-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;transition:var(--transition)}
+.chart-box:hover{border-color:#c0b9a8;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.chart-box h4{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--text-primary);letter-spacing:.3px;font-family:var(--font-serif)}
+.chart-inner{width:100%;height:400px}
+
+/* Insight */
+.insight{position:relative;padding:20px 22px;margin:24px 0;border-radius:var(--radius);background:var(--bg-card);border:1px solid var(--border);font-size:14px;line-height:1.8;color:var(--text-secondary)}
+.insight::before{content:'◆';display:block;font-size:8px;margin-bottom:10px;color:var(--purple);letter-spacing:3px}
+.insight.xy{border-color:rgba(224,112,64,.2);background:rgba(224,112,64,.03)}.insight.xy::before{color:var(--xy);content:'◆ ◆'}
+.insight.jd{border-color:rgba(192,57,43,.2);background:rgba(192,57,43,.03)}.insight.jd::before{color:var(--jd);content:'◆ ◆'}
+.insight.tm{border-color:rgba(108,60,176,.2);background:rgba(108,60,176,.03)}.insight.tm::before{color:var(--tm);content:'◆ ◆'}
+
+/* Feature grid */
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.feat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:var(--transition);position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:all .2s ease}
+.feat-card:hover{transform:translateY(-1px);box-shadow:0 3px 14px rgba(0,0,0,.06);border-color:#c0b9a8}
+.feat-card.xy::before{background:var(--xy)}.feat-card.jd::before{background:var(--jd)}.feat-card.tm::before{background:var(--tm)}
+.feat-card .feat-icon{font-size:15px;margin-bottom:6px}
+.feat-card .feat-title{font-weight:600;font-size:13px;margin-bottom:5px;color:var(--text-primary)}
+.feat-card .feat-desc{font-size:var(--font-small);color:var(--text-secondary);line-height:1.7}
+
+/* Platform header */
+.platform-header{padding:24px 28px;border-radius:var(--radius-lg);margin-bottom:22px;color:#fff;position:relative;overflow:hidden}
+.platform-header h3{font-size:clamp(18px,2.2vw,22px);font-weight:700;position:relative;font-family:var(--font-serif)}
+.platform-header p{opacity:.85;font-size:13px;margin-top:4px;position:relative;max-width:600px}
+.platform-header.xy{background:var(--xy)}.platform-header.jd{background:var(--jd)}.platform-header.tm{background:var(--tm)}
+
+/* Timeline */
+.timeline{display:flex;gap:0;margin:22px 0}
+.timeline-step{flex:1;text-align:center;position:relative;padding:0 6px}
+.timeline-step .step-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;margin:0 auto 8px;transition:var(--transition)}
+.timeline-step:hover .step-dot{transform:scale(1.1)}
+.timeline-step .step-title{font-weight:600;font-size:12px;margin-bottom:3px;color:var(--text-primary)}
+.timeline-step .step-desc{font-size:var(--font-caption);color:var(--text-secondary);line-height:1.5}
+.timeline-step::after{content:'→';position:absolute;top:4px;right:-4px;font-size:14px;color:var(--text-muted)}
+.timeline-step:last-child::after{content:''}
+.timeline.xy .step-dot{background:var(--xy)}.timeline.jd .step-dot{background:var(--jd)}.timeline.tm .step-dot{background:var(--tm)}
+
+/* Comparison table */
+.comp-table-wrap{overflow-x:auto;margin:18px 0;border-radius:var(--radius);border:1px solid var(--border)}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
+.comp-table th{padding:12px 14px;font-weight:600;font-size:11px;text-align:left;white-space:nowrap;letter-spacing:.5px;color:#fff}
+.comp-table th:first-child{background:var(--bg-surface);color:var(--text-primary)}
+.comp-table th:nth-child(2){background:var(--xy)}.comp-table th:nth-child(3){background:var(--jd)}.comp-table th:nth-child(4){background:var(--tm)}.comp-table th:nth-child(5){background:var(--purple)}
+.comp-table td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.65;color:var(--text-secondary)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:nth-child(even) td{background:rgba(0,0,0,.015)}
+.comp-table td:first-child{font-weight:600;color:var(--text-primary);white-space:nowrap;background:rgba(0,0,0,.008)}
+
+/* Highlight */
+.hl{padding:1px 6px;border-radius:2px;font-weight:600;font-size:.92em}
+.hl.xy{background:rgba(224,112,64,.10);color:var(--xy-dark)}
+.hl.jd{background:rgba(192,57,43,.10);color:var(--jd-dark)}
+.hl.tm{background:rgba(108,60,176,.10);color:var(--tm-dark)}
+.hl.gold{background:rgba(201,169,98,.15);color:#8b6914}
+.hl.green{background:rgba(45,125,79,.10);color:var(--green)}
+.hl.red{background:rgba(192,57,43,.08);color:var(--red)}
+
+/* Conclusion cards */
+.conc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.conc-card{border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-card);border:1px solid var(--border);transition:var(--transition)}
+.conc-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.conc-card .conc-top{padding:24px 22px 14px;color:#fff;position:relative;overflow:hidden}
+.conc-card .conc-top h4{font-size:18px;font-weight:700;position:relative;font-family:var(--font-serif)}
+.conc-card .conc-top .conc-tag{font-size:10px;opacity:.8;margin-top:4px;font-weight:500;letter-spacing:1px;position:relative}
+.conc-card .conc-body{padding:18px 22px;font-size:13px;line-height:1.7;color:var(--text-secondary)}
+.conc-card .conc-body strong{color:var(--text-primary)}
+.conc-card.xy .conc-top{background:var(--xy)}.conc-card.jd .conc-top{background:var(--jd)}.conc-card.tm .conc-top{background:var(--tm)}
+
+/* ═══ COMPONENT 1: PROGRESS BAR ROWS ═══ */
+.prog-grid{margin:18px 0;display:flex;flex-direction:column;gap:8px}
+.prog-row{display:grid;grid-template-columns:160px 1fr 1fr 1fr;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.prog-label{font-size:13px;font-weight:600;color:var(--text-primary)}
+.prog-item{display:flex;align-items:center;gap:8px}
+.prog-track{flex:1;height:7px;background:var(--bg-surface);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;width:100%;border-radius:4px;transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.22,.61,.36,1)}
+.prog-fill.xy{background:var(--xy)}.prog-fill.jd{background:var(--jd)}.prog-fill.tm{background:var(--tm)}
+.prog-val{font-size:12px;font-weight:600;min-width:40px;text-align:right;font-family:"SF Mono","Cascadia Code","Consolas",monospace}
+.prog-val.xy{color:var(--xy)}.prog-val.jd{color:var(--jd)}.prog-val.tm{color:var(--tm)}
+
+/* ═══ COMPONENT 2: CASE VERDICT CARDS ═══ */
+.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.case-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--transition)}
+.case-card:hover{transform:translateY(-1px);box-shadow:0 3px 14px rgba(0,0,0,.06);border-color:#c0b9a8}
+.case-card .case-bar{height:2px}
+.case-card .case-bar.xy{background:var(--xy)}.case-card .case-bar.jd{background:var(--jd)}.case-card .case-bar.tm{background:var(--tm)}
+.case-card .case-body{padding:18px 20px}
+.case-card .case-title{font-weight:600;font-size:13px;color:var(--text-primary);margin-bottom:6px;line-height:1.4;font-family:var(--font-serif)}
+.case-card .case-story{font-size:12.5px;color:var(--text-secondary);line-height:1.7;margin-bottom:10px}
+.case-card .case-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.case-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600;letter-spacing:.3px}
+.case-badge.win{background:rgba(45,125,79,.10);color:var(--green)}
+.case-badge.lose{background:rgba(192,57,43,.10);color:var(--red)}
+.case-badge.partial{background:rgba(184,134,11,.10);color:var(--amber)}
+.case-badge.severe{background:rgba(192,57,43,.06);color:var(--red);font-size:10px}
+.case-badge.notable{background:rgba(45,90,75,.08);color:var(--purple);font-size:10px}
+.case-amount{font-size:11px;color:var(--text-muted);font-family:"SF Mono","Cascadia Code","Consolas",monospace}
+
+/* ═══ COMPONENT 3: FLOW TOPOLOGY ═══ */
+.flow-topo{display:flex;align-items:stretch;gap:0;margin:22px 0;overflow-x:auto;padding:6px 0}
+.flow-col{flex:1;min-width:170px;display:flex;flex-direction:column;gap:8px}
+.flow-node{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 14px;text-align:center;transition:var(--transition);position:relative}
+.flow-node:hover{border-color:#b0a894;transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.flow-node .flow-icon{font-size:18px;margin-bottom:6px}
+.flow-node .flow-title{font-weight:600;font-size:12px;color:var(--text-primary);margin-bottom:3px}
+.flow-node .flow-detail{font-size:10.5px;color:var(--text-muted);line-height:1.5}
+.flow-node.pain{border-color:rgba(192,57,43,.15);background:rgba(192,57,43,.015)}.flow-node.pain .flow-icon{color:var(--red)}
+.flow-node.good{border-color:rgba(45,125,79,.15);background:rgba(45,125,79,.015)}.flow-node.good .flow-icon{color:var(--green)}
+.flow-arrow{display:flex;align-items:center;justify-content:center;padding:0 4px;color:var(--text-muted);font-size:16px;min-width:24px}
+.flow-col-header{text-align:center;font-weight:700;font-size:11px;color:var(--text-primary);margin-bottom:4px;letter-spacing:.5px}
+
+/* ═══ COMPONENT 4: SENTIMENT BAR ═══ */
+.senti-bar-wrap{margin:10px 0;display:flex;align-items:center;gap:10px}
+.senti-label{font-size:12px;font-weight:600;color:var(--text-primary);min-width:60px}
+.senti-track{flex:1;height:20px;background:var(--bg-surface);border-radius:4px;overflow:hidden;display:flex}
+.senti-seg{height:100%}
+.senti-seg.hi{background:rgba(45,125,79,.4)}.senti-seg.mid{background:rgba(184,134,11,.4)}.senti-seg.lo{background:rgba(192,57,43,.4)}
+.senti-score{font-size:13px;font-weight:700;min-width:36px;text-align:right;font-family:"SF Mono","Cascadia Code","Consolas",monospace}
+
+/* ═══ COMPONENT 5: PULSE STATUS ═══ */
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.status-dot.live{background:var(--green)}.status-dot.dead{background:var(--red);opacity:.7}.status-dot.warn{background:var(--amber)}
+@keyframes status-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ═══ COMPONENT 6: COUNTER ═══ */
+.counter-num{font-variant-numeric:tabular-nums;font-family:"SF Mono","Cascadia Code","Consolas",monospace}
+
+/* ═══ COMPONENT 7: CONTENT FLOW ═══ */
+.content-flow{display:flex;flex-direction:column;gap:24px;margin:28px 0}
+.content-text{font-size:14px;line-height:1.9;color:var(--text-secondary);padding:0 2px}
+.content-text strong{color:var(--text-primary);font-weight:600}
+.content-image{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--transition);cursor:pointer}
+.content-image:hover{border-color:#b0a894;box-shadow:0 3px 16px rgba(0,0,0,.08);transform:translateY(-1px)}
+.content-image img{display:block;width:100%;height:auto;max-width:100%}
+.content-image .content-caption{padding:10px 16px;font-size:11px;color:var(--text-muted);border-top:1px solid var(--border);letter-spacing:.3px}
+.content-image .content-caption::before{content:"📷 ";font-size:10px}
+.content-image img[loading="lazy"]{background:var(--bg-surface)}
+
+/* ═══ COMPONENT 8: LIGHTBOX ═══ */
+.lightbox-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.lightbox-overlay.open{opacity:1;pointer-events:auto}
+.lightbox-overlay img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:scale(.9);transition:transform .3s ease}
+.lightbox-overlay.open img{transform:scale(1)}
+.lightbox-close{position:absolute;top:20px;right:28px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;z-index:1}
+.lightbox-close:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
+.lightbox-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;padding:5px 16px;border-radius:20px;background:rgba(0,0,0,.5);max-width:80vw;text-align:center}
+
+/* Footer */
+.footer{padding:44px 28px;text-align:center;border-top:1px solid var(--border);color:var(--text-muted);font-size:var(--font-small)}
+.footer p{margin:2px 0}
+
+/* Animations */
+.anim{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.anim.visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  .anim{opacity:1;transform:none;transition:none}
+  .hero-scroll span{animation:none}
+  *{transition-duration:0s!important;animation-duration:0s!important}
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .section-num{font-size:38px;top:-16px;left:-2px}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .feat-grid,.conc-grid,.case-grid{grid-template-columns:1fr}
+  .timeline{flex-direction:column;gap:10px}
+  .timeline-step::after{content:'↓';position:static;display:block;margin-top:4px}
+  .flow-topo{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg)}
+  .prog-row{grid-template-columns:100px 1fr}
+  .hero h1{font-size:24px}
+  .container{padding:0 16px}
+  .comp-table-wrap{font-size:11px}
+}
+
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav"><div class="nav-inner"><span class="nav-brand">◈ 全景调研</span></div></nav>
+<header class="hero" id="hero">
+  <h1 id="hero-title"></h1>
+  <p class="sub" id="hero-sub"></p>
+  <div class="hero-tags" id="hero-tags"></div>
+  <p class="hero-date" id="hero-date"></p>
+  <div class="hero-scroll"><span></span></div>
+</header>
+
+<main id="main-content"></main>
+<section class="section"><div class="container"><div id="conclusion-content"></div></div></section>
+<footer class="footer" id="footer"></footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     DATA SECTION — 换报告只需改这里
+     使用纯文本标记语法：[b]加粗[/b] [xy]闲鱼色[/xy] [jd]京东色[/jd]
+     [tm]天猫色[/tm] [gold]金色[/gold] [br]换行
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+/* ══ REPORT_DATA_PLACEHOLDER ══ */
+const R = {"meta":{"title":"FinChip 售后架构设计","subtitle":"从闲鱼 · 京东 · 天猫三套售后系统各取所长 — 映射到链上 AI Skill 交易平台的争议解决体系","date":"2026 年 7 月 · 架构设计报告","footer":"闲鱼 · 京东 · 天猫 → FinChip.AI | 场景映射 · 原则边界 · 可落地方案"},"platforms":[{"id":"xy","name":"闲鱼","color":"#FF6B35","dark":"#D4491E","light":"rgba(255,107,53,.08)","tag":"C2C 社区自治"},{"id":"jd","name":"京东","color":"#DC143C","dark":"#9B0A28","light":"rgba(220,20,60,.08)","tag":"B2C 品质纪律"},{"id":"tm","name":"天猫","color":"#7C3AED","dark":"#5B21B6","light":"rgba(124,58,237,.08)","tag":"B2C 品牌治理"}],"overview":{"insight":"[b]核心命题[/b]：FinChip 卖的是[gold]链上 AI Skill（NFT + API）[/gold]，不存在物流、不存在实物损耗、不存在「退换」的物理动作。其售后本质是[gold]争议解决 + 权益保障[/gold]，涵盖 6 类场景。[br]三套实物电商售后系统的具体机制不能照搬，但[gold]架构思想和治理原则[/gold]可以直接映射。本报告每条建议都附[gold]真实样板假设[/gold]，确保可落地。","charts":[{"id":"chart-dna","type":"radar","title":"三平台售后 DNA 与 FinChip 目标位","height":420,"dims":["社区自治力","SLA 纪律性「, 」算法自动化「, 」安全纵深「, 」低门槛准入「, 」裁决透明度"],"series":[{"name":"闲鱼","color":"#FF6B35","data":[5,1,2,2.5,4.5,2]},{"name":"京东","color":"#DC143C","data":[1.5,4.5,3,4,3,2.5]},{"name":"天猫","color":"#7C3AED","data":[1,3.5,4.5,3.5,1.5,2]},{"name":"FinChip 目标","color":"#00C896","data":[4,4,4.5,5,5,5]}]}]},"sections":[{"_comment":"═══ Part 1：6 大售后场景映射 ═══","id":"p1","num":"01","title":"六大售后场景 → 可落地方案","desc":"FinChip 的「售后」= 争议解决 + 权益保障。以下 6 类场景覆盖全部售后需求，每类给出[b]三平台可借鉴机制 + 改造方案 + 样板假设[/b]。","content":[{"type":"text","value":"[b][gold]S1 · 功能不符[/gold] — 高频中危[/b][br]买了 Skill 发现跑不通 / 输出与描述不符。对应实物电商「商品与描述不符」。[br][br][b]借鉴[/b]：[xy]闲鱼小法庭 17 人投票[/xy] + [jd]京东 24h 举证 SLA[/jd] + [tm]天猫体验分高则不介入[/tm]。[br][b]改造[/b]：三层递进——L1 自动冻结版税 + 链上日志取证 + 72h Creator 响应期；L2 社区技术仲裁（17 名质押评审员，9 票胜出，合约自动执行）；L3 平台终审（<5% 极端案件，判例写入链上）。"},{"type":"text","value":"[b][gold]S2 · API 不可用[/gold] — 高频低危[/b][br]Skill 宕机 / 超时 / 报错。实物电商无对应物——这是 FinChip 独有场景。[br][br][b]借鉴[/b]：[jd]京东 SLA 体系（退货 7 日 / 换货 15 日）[/jd]的思路而非具体数值。[br][b]改造[/b]：Skill 上架时声明 SLA 等级（Tier 1/2/3），链上 Oracle 节点持续监控可用率 + 延迟。跌破 SLA → 自动触发退款池 + 连续 7 天不达标自动下架。承诺方和执行方都是代码，不像京东 PLUS 换新承诺被人为拒履约。"},{"type":"text","value":"[b][gold]S3 · 安全漏洞[/gold] — 低频致命[/b][br]Skill 含后门 / 数据窃取。比实物假货严重百倍——直接威胁买家数字资产。[br][br][b]借鉴[/b]：[jd]京东 27 个质检实验室 + 7 步品控[/jd]（不合格不入库）+ [tm]天猫 AI 假图检测 + 账号诚信体系[/tm]。[br][b]改造[/b]：四层防线——L1 上架前 CertiK 强制扫描（硬门禁，非建议）；L2 运行时沙箱隔离；L3 漏洞赏金计划；L4 恶意 Skill 紧急冻结（CertiK 安全委员会多签触发，非单人决策）。"},{"type":"text","value":"[b][gold]S4 · 计费争议[/gold] — 中频中危[/b][br]调用次数对不上 / 超额扣费。对应天猫红包退款计算不透明的痛点。[br][br][b]FinChip 结构性优势[/b]：每笔调用记录 = 链上事件，不可篡改。争议发生时智能合约自动拉取时段内所有调用记录 × 单价 = 总费用。不需要「客服核算」——链上数据本身就是终审判决。天猫用户永远搞不清红包怎么摊的，FinChip 每一笔透明可查。"},{"type":"text","value":"[b][gold]S5 · 侵权抄袭[/gold] — 中频高危[/b][br]Skill B 疑似盗用 Skill A 代码。对应天猫 IP 保护（77 万权利人平台）。[br][br][b]借鉴[/b]：[tm]天猫 GNN 图神经网络假货检测 + AACA 品牌联盟[/tm]。[br][b]改造[/b]：AI 代码相似度检测（AST 比对）+ [gold]链上时间戳[/gold]天然确定谁先上架（天猫做不到的！）。侵权成立 → 合约自动冻结 + 版税划归原创者。成立 Creator 联盟共建黑名单。"},{"type":"text","value":"[b][gold]S6 · 许可争议[/gold] — 低频高危[/b][br]ERC-1155 vs ERC-721 Fork 权利边界不清。三平台无直接对应。[br][br][b]借鉴[/b]：[tm]天猫品牌授权链体系[/tm]（旗舰店/专卖店/专营店的分级授权思路）。[br][b]改造[/b]：L1 合约自动比对许可条款；L2 社区代码审查团（5 名技术评审员判断「实质性修改」）。链上许可条款 + 社区技术判断 = 完整裁决链。"}]},{"_comment":"═══ Part 2：三平台借鉴度量化 ═══","id":"p2","num":"02","title":"三平台各取什么、放弃什么","desc":"不是全盘照搬，而是精确摘取。每个平台的借鉴项基于[b]可落地性 + 风险匹配度[/b]评估，放弃项基于[b]原则性红线[/b]判定。","progressRows":[{"label":"闲鱼 → FinChip 借鉴度","xy":"83","jd":"30","tm":"25"},{"label":"京东 → FinChip 借鉴度","xy":"20","jd":"67","tm":"35"},{"label":"天猫 → FinChip 借鉴度","xy":"15","jd":"40","tm":"58"}],"platforms":[{"pid":"xy","header":"从闲鱼拿：C2C 社区治理的骨架","hdesc":"唯一被大规模验证的 C2C 社区售后模型 — 1200 万+ 纠纷、92% 社区闭环","insight":"[b][xy]为什么闲鱼借鉴度最高？[/xy][/b] FinChip 的 AI Skill 争议本质是[b]技术判断[/b]而非客服能裁定，同行评审是唯一高质量的解。闲鱼小法庭是这个模式唯一跑通的大规模实验。","features":[{"icon":"⚖️","title":"✅ 小法庭 17 人投票 → 链上质押陪审团","desc":"同行技术评审 + 代币质押激励对齐 + 智能合约强制执行。核心改造：去掉客服一票否决权。"},{"icon":"⭐","title":"✅ 鱼力值 → 链上多维信誉分","desc":"调用量 / 好评率 / 审计通过次数 / 社区贡献度 — 全部链上记录，不可篡改。"},{"icon":"🔍","title":"✅ 验货宝 → CertiK 安全审计（已具备）","desc":"闲鱼靠第三方鉴定建立信任，FinChip 靠 CertiK 代码审计建立信任。需补充：功能维度社区 Review。"},{"icon":"📈","title":"✅ 7 级鱼小铺 → Creator 等级体系","desc":"L1-L7 渐进解锁权限：低级免费上架、高级解锁多链部署 + 低费率。积分驱动升级。"},{"icon":"🚫","title":"❌ 坚决不拿：客服一票推翻小法庭","desc":"这是闲鱼售后口碑崩塌的根本原因。FinChip 的合约执行机制天然免疫此问题 — 守住。"},{"icon":"🚫","title":"❌ 坚决不拿：平台响应率 0%","desc":"黑猫/电诉宝完全不理。新平台赌不起这个信任透支 — FinChip 必须从 Day 1 建立响应机制。"}]},{"pid":"jd","header":"从京东拿：品质基建的纪律","hdesc":"电商售后 SLA 体系的标杆 — 退款 2.1h、自营客诉 0.27%、解决率 84%","insight":"[b][jd]京东的贡献在于「纪律」[/jd][/b] — 明确的时间承诺 + 分层验证 + 量化信誉。但京东的实体物流/质检基建不适用于数字资产，需抽象为数字等效层。","features":[{"icon":"⏱️","title":"✅ 24h 响应 SLA → 72h Creator 响应期","desc":"京东 24h 对个人开发者太苛刻，72h 兼顾效率与公平。超时未响应 → 自动退款 + 信誉扣分。"},{"icon":"🛡️","title":"✅ 四层验证体系 → 四层 Skill 准入","desc":"OCR→代码扫描 / 打款→质押 / 人工→社区 Review。京东品控方法的数字翻译。"},{"icon":"📊","title":"✅ 京信用 550-1100 → 链上信誉联动合约","desc":"信誉分 < 阈值 → 自动降低搜索排名、提高质押金。月度更新 → 实时更新。"},{"icon":"🏪","title":"✅ 四类店铺 → 四类 Creator 等级","desc":"Verified (CertiK+CKYC) / Audited (社区 Review) / Community (基础) / Open (钱包即入驻)。"},{"icon":"🚫","title":"❌ 坚决不拿：自营体系","desc":"FinChip 做平台不做技能。自营 = 与 Creator 争利、破坏平台中立性。官方精选 Curated 可以，自营不行。"},{"icon":"🚫","title":"❌ 坚决不拿：算法黑箱判责","desc":"京东商家第二槽点。FinChip 链上透明 + 社区评审 = 天然解药。裁决过程全链可见。"}]},{"pid":"tm","header":"从天猫拿：算法驱动 + 品牌治理的精华","hdesc":"\"用系统代替人\"策略的先行者 — 维权指数 ↓34%、日均拦截 40 万笔、120 万商家达标","insight":"[b][tm]天猫最值得学的是「算法替代人工」[/tm][/b] — 证明了一个关键假设：售后质量不一定靠堆人工客服。FinChip 的链上数据 + Oracle + 合约可以把这个策略走到极致。但天猫的 90% 拒绝率和 30 天入驻流程必须抛弃。","features":[{"icon":"🤖","title":"✅ 算法替代人工（40 万/日拦截）→ 合约自动执行","desc":"Skill 调用成功率 < 阈值 → 自动暂停销售 → 触发审计。天猫用算法、FinChip 用合约。"},{"icon":"👤","title":"✅ 账号诚信体系 → 链上行为黑名单","desc":"恶意争议 / 虚假评价 / 滥用退款入档 → A2A 协议跨平台共享。链上天然优势：一个地址在各处可查。"},{"icon":"📐","title":"✅ 真实体验分 3 维度 → Skill 多维评分","desc":"功能完整度 (Bug 率) / Creator 响应速度 / API 可用率 SLA。20 年最大信用改革思路直接移植。"},{"icon":"🏷️","title":"✅ 品牌评估五维度 → Skill 质量评估框架","desc":"定位 / 开发者能力 / 差异性 / 代码质量 / 社区信号。用评估框架但不设硬门槛（不学 90% 拒绝率）。"},{"icon":"🚫","title":"❌ 坚决不拿：30-45 天入驻 + 90% 拒绝率","desc":"原则性错误。Web3 精神是 Permissionless — 低门槛进入 + 行为建立信任。京东春晓计划「1 分钟开店」才是正解。"},{"icon":"🚫","title":"❌ 坚决不拿：平台擅自关闭工单","desc":"天猫小二单方面关工单是用户最深恶痛绝的行为。FinChip 智能合约执行后无人能撤回 — 链上系统的天然约束即优势。"}]}]},{"_comment":"═══ Part 3：五条不可协商原则 ═══","id":"p3","num":"03","title":"五条不可协商原则","desc":"三平台最惨痛的教训提炼为五条[b]原则性红线[/b]。不是建议，是边界——任何售后机制设计都不得违反。","content":[{"type":"text","value":"[b][gold]三平台共同的塌陷点都是「人工推翻系统判决」[/gold][/b]——闲鱼客服推小法庭 17:0 / 天猫小二关工单 / 京东算法黑箱不透明。FinChip 的链上架构恰好是这个问题的解药。[br][br][b]P1 · 社区裁决不可被单人推翻[/b][br]来源：闲鱼客服一票否决小法庭 17:0 判决。→ FinChip 解法：智能合约自动执行裁决，无「客服」角色、无人工干预入口。[br][br][b]P2 · 链上证据 = 唯一真相源[/b][br]来源：天猫假公章拒退、京东算法黑箱。→ FinChip 解法：调用记录 + 交易历史 + 审计报告全部在链上，不存在「证据不足」。[br][br][b]P3 · 合约自动执行，取消人工「酌情」[/b][br]来源：天猫小二擅自关工单、京东「技术部门处理中」敷衍。→ FinChip 解法：裁决 = 合约执行 = 不可逆。[br][br][b]P4 · 安全门禁不可跳过[/b][br]来源：闲鱼假货泛滥、天猫 AI 假图。数字资产安全风险更高。→ CertiK 扫描是硬门禁，不是「建议修改」。[br][br][b]P5 · 低门槛进入 + 行为建立信任[/b][br]来源：天猫 90% 拒绝率（太严）vs 闲鱼几乎不审（太松）。→ 钱包即入驻 → 行为累积信誉 → 信誉解锁权限。"}]},{"_comment":"═══ Part 4：售后总架构 ═══","id":"p4","num":"04","title":"售后总架构：社区验证 + 协议执行","desc":"三层递进，不跳级。L1 自动处理 80% 争议，L2 社区仲裁 15%，L3 平台终审 <5%。每一层的输出都可被下一层引用，但不能被推翻。","flowTopo":[{"header":"[b]L1 · 协议执行层[/b][br][gold]80% 争议在此解决[/gold]","nodes":[{"icon":"🔒","title":"发起争议 → 合约自动冻结版税","detail":"交易金额锁定，不进 Creator 口袋。同时调取链上证据包：Skill 描述 hash + 调用日志 + API 成功率。","type":"good"},{"icon":"⏳","title":"Creator 72h 响应窗口","detail":"借鉴京东 24h SLA 思路，适配个人开发者节奏。超时未响应 → 自动退款 + 信誉扣分，无人能干预。","type":"good"},{"icon":"📡","title":"Oracle 自动 SLA 监控","detail":"链上 Oracle 持续监控 Skill 可用率 / 延迟。跌破声明 SLA → 自动触发按比例退款 + 连续 7 天不达标自动下架。","type":"good"}]},{"header":"[b]L2 · 社区治理层[/b][br][gold]15% 升级争议[/gold]","nodes":[{"icon":"⚖️","title":"17 人质押评审团","detail":"借鉴闲鱼小法庭。随机抽取 + 同领域经验 + 信誉分 ≥ 阈值 + 质押代币。评审正确得奖励，错误被罚没。评审员看到 Skill 描述 + 调用日志 + 双方举证 + 审计报告。","type":"good"},{"icon":"🔐","title":"9 票胜出 + 合约自动执行","detail":"评审投票结果 → 智能合约直接执行退款 / 驳回 / 版税划转。无人能推翻。闲鱼 17:0 被客服一票否决的教训直接规避。","type":"good"},{"icon":"🛡️","title":"CertiK 安全委员会（S3 专用）","detail":"恶意 Skill 检测 → 多签触发紧急冻结。借鉴京东质检实验室思路：集中式安全基础设施，但决策权分散在多签。","type":"good"}]},{"header":"[b]L3 · 平台兜底层[/b][br][gold]<5% 极端案件[/gold]","nodes":[{"icon":"📋","title":"双方均不服 + 额外质押 → 触发终审","detail":"借鉴京东仲裁制。防止滥用：进入 L3 需额外质押保证金，败诉方质押金归对方。","type":"good"},{"icon":"📜","title":"判例写入链上 → 后续 L1 自动引用","detail":"借鉴天猫维权指数持续下降的「算法学习」思路。每个 L3 判例形成链上先例，L1 可自动匹配相似案件直接裁决。","type":"good"},{"icon":"🚫","title":"天猫式「客服关工单」永久不存在","detail":"L3 判决由多签合约执行。无单人按钮可推翻。链上天然约束 = 天猫最深恶痛绝的功能直接不存在。","type":"pain"}]}]},{"_comment":"═══ Part 5：三个真实样板假设 ═══","id":"p5","num":"05","title":"三个真实样板假设","desc":"将前述机制代入具体场景，验证可落地性。每个案例标注对应场景编号和主要借鉴平台。","cases":[{"pid":"fc","title":"样板 A · MEV 套利 Skill 功能不符 → L1 自动 + L2 仲裁","story":"Alice 花 0.5 ETH 购买 Bob 的「MEV 套利监控 Skill」（描述：5 链实时、亚秒级报警）。调用后实际延迟 8 秒、仅覆盖 2 条链。Alice 发起争议 → L1 自动触发：版税冻结 + 链上日志自动对比（描述 hash vs 实际调用数据）。Bob 72h 内回应「网络拥堵」。Alice 不接受 → L2 17 名评审员（均有链上 DeFi 记录）投票 15:2 判定「功能不符」 → 合约自动退款 0.5 ETH + Bob 信誉 -15%。Bob 无法申诉推翻——因为没有「客服」按钮。","verdict":"成功","severity":"中危","notable":"S1 功能不符","amount":"0.5 ETH 退款"},{"pid":"fc","title":"样板 B · 数据窃取 Skill 安全漏洞 → L1 紧急冻结 + S3 防线","story":"Charlie 上架了一个「跨链套利扫描 Skill」，CertiK 上架前扫描通过（防线 1）。上线 3 天后，运行时沙箱（防线 2）检测到 Skill 异常读取买家钱包地址列表并向外发送。防线 4 自动触发：智能合约冻结 Skill + 通知全体持有者 + CertiK 安全委员会多签确认。Charlie 的质押金被全额罚没，分配给受影响用户。漏洞赏金计划（防线 3）奖励发现者 $5,000。整个过程 4 分钟内完成，无人能延迟或撤销。","verdict":"成功","severity":"致命","notable":"S3 安全漏洞","amount":"全部质押金罚没"},{"pid":"fc","title":"样板 C · Fork 权利边界争议 → L2 代码审查团 + 链上时间戳","story":"David 基于 Eve 的 ERC-721 Skill 做了 Fork（修改 30% 代码 + 新增功能），标注「Fork from Eve」。Eve 认为修改不足 50%，不构成实质性 Fork，要求更高版税分成。链上时间戳自动确定 Eve 为先发布者 → L2 5 名技术评审员对比两份代码的 AST 相似度、API 接口差异、新增功能价值。判定 David 的修改构成「实质性差异」——Fork 合法，但需将版税分成从默认 5% 上调至 12%。双方接受，合约自动更新分成比例。","verdict":"部分成功","severity":"低危","notable":"S6 许可争议","amount":"版税分成 5%→12%"}]}],"conclusion":{"insight":"[b]三套售后系统，一套答案[/b]：闲鱼贡献[xy]社区治理的信任机制[/xy]，京东贡献[jd]品质纪律和时间承诺[/jd]，天猫贡献[tm]算法替代人工的执行策略[/tm]。但三者的共同教训才是最重要的——[gold]不要让任何人能推翻系统已经做出的裁决[/gold]。FinChip 的链上架构天然支持这一点：不是「更好的客服」，而是「不需要客服推翻任何东西」。[br][br]这套方案的核心竞争力不在某个具体规则，而在于[gold]合约执行 = 裁决 = 不可逆[/gold]这个结构性优势。三平台做不到的事，恰好是 FinChip 的基因。","cards":[{"pid":"xy","tag":"拿社区治理的骨架","essence":"小法庭 17 人投票 → 链上质押陪审团 + 合约执行","detail":"1200 万+ 纠纷验证过的模型。唯一改造：去掉客服一票否决权。[b]借鉴度 83%，C2C 社区治理唯一大规模验证的范本。[/b]"},{"pid":"jd","tag":"拿品质基建的纪律","essence":"SLA 体系 + 四层验证 + 量化信誉 → 数字等效层","detail":"京东证明了售后质量靠纪律不靠人海。需翻译为数字资产的验证/监控/信誉体系。[b]借鉴度 67%，品质管控方法论标杆。[/b]"},{"pid":"tm","tag":"拿算法驱动的精华","essence":"算法替代人工 + 账号诚信 + 多维评分 → 合约自动化","detail":"维权指数降 34% 证明这个策略有效。FinChip 合约可以比天猫算法走得更远。[b]借鉴度 58%，「系统代替人」策略的先行验证。[/b]"}]}};
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     RENDER ENGINE v2 — 模板核心，换报告不需要改下面
+     内置：6 图表工厂 + 10+ 组件 + 纯文本标记转换
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+// ═══ MARKUP PARSER — 纯文本 → HTML（支持嵌套） ═══
+function parseMarkup(text){
+  if(typeof text!=='string') return text;
+  const tags = [
+    {key:'b',    replace:'<strong>$1</strong>'},
+    {key:'xy',   replace:'<span class="hl xy">$1</span>'},
+    {key:'jd',   replace:'<span class="hl jd">$1</span>'},
+    {key:'tm',   replace:'<span class="hl tm">$1</span>'},
+    {key:'gold', replace:'<span class="hl gold">$1</span>'},
+  ];
+  let result = text;
+  // Loop until no more replacements — handles arbitrary nesting depth
+  for (let changed = true; changed; ) {
+    changed = false;
+    for (const t of tags) {
+      const prev = result;
+      result = result.replace(new RegExp('\\['+t.key+'\\]([\\s\\S]*?)\\[/'+t.key+'\\]','g'), t.replace);
+      if (result !== prev) changed = true;
+    }
+  }
+  return result.replace(/\[br\]/g,'<br>');
+}
+
+// ═══ ECharts 暗色主题 ═══
+const darkTheme = {
+  textStyle:{color:'#9491a0'}, legend:{textStyle:{color:'#9491a0'},icon:'roundRect'},
+  splitLine:{lineStyle:{color:'#1e2130',type:'dashed'}},
+  axisLine:{lineStyle:{color:'#1e2130'}},
+  axisTick:{lineStyle:{color:'#1e2130'}},
+};
+function baseOpts(){
+  return {
+    tooltip:{trigger:'axis',backgroundColor:'#1c1f2e',borderColor:'#2a2d3d',textStyle:{color:'#f0ece4',fontSize:12}},
+    animationDuration:800, animationEasing:'cubicOut'
+  };
+}
+
+// ═══ Build NAV ═══
+(function buildNav(){
+  const navInner = document.querySelector('.nav-inner');
+  const links = [{href:'#hero',text:'封面'}];
+  R.sections.forEach(s => links.push({href:'#'+s.id,text:s.title}));
+  links.push({href:'#conclusion',text:'结语'});
+  links.forEach(l => {
+    const a = document.createElement('a'); a.href=l.href; a.textContent=l.text; navInner.appendChild(a);
+  });
+})();
+
+// ═══ Build HERO ═══
+(function buildHero(){
+  document.getElementById('hero-title').textContent = R.meta.title;
+  document.getElementById('hero-sub').textContent = R.meta.subtitle;
+  document.getElementById('hero-date').textContent = R.meta.date;
+  const tags = document.getElementById('hero-tags');
+  R.platforms.forEach(p => {
+    const span = document.createElement('span'); span.className='hero-tag '+p.id; span.textContent=p.name; tags.appendChild(span);
+  });
+})();
+
+// ═══ DOM helper ═══
+function el(tag,cls,html){
+  const e = document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e;
+}
+
+// ═══ Builders — all use parseMarkup on text content ═══
+function buildInsight(text,pid){
+  return el('div','insight'+(pid?' '+pid:''),parseMarkup(text));
+}
+function buildPlatformHeader(pid,h,hd){
+  return el('div','platform-header '+pid,'<h3>'+parseMarkup(h)+'</h3><p>'+parseMarkup(hd)+'</p>');
+}
+function buildFeatureGrid(features,pid){
+  const grid = el('div','feat-grid');
+  features.forEach(f => {
+    const card = el('div','feat-card '+pid);
+    card.innerHTML = '<div class="feat-icon">'+f.icon+'</div><div class="feat-title">'+parseMarkup(f.title)+'</div><div class="feat-desc">'+parseMarkup(f.desc)+'</div>';
+    grid.appendChild(card);
+  });
+  return grid;
+}
+function buildTimeline(steps,pid){
+  const tl = el('div','timeline '+pid);
+  steps.forEach((s,i) => {
+    const step = el('div','timeline-step');
+    step.innerHTML = '<div class="step-dot">'+(i+1)+'</div><div class="step-title">'+parseMarkup(s.title)+'</div><div class="step-desc">'+parseMarkup(s.desc)+'</div>';
+    tl.appendChild(step);
+  });
+  return tl;
+}
+function buildComparisonTable(comp){
+  if(!comp) return '';
+  const wrap = el('div','comp-table-wrap');
+  const table = document.createElement('table'); table.className='comp-table';
+  const thead = document.createElement('thead');
+  const tr = document.createElement('tr');
+  comp.headers.forEach(h => {const th=document.createElement('th');th.innerHTML=parseMarkup(h);tr.appendChild(th);});
+  thead.appendChild(tr); table.appendChild(thead);
+  const tbody = document.createElement('tbody');
+  comp.rows.forEach(row => {
+    const r = document.createElement('tr');
+    row.forEach(cell => {const td=document.createElement('td');td.innerHTML=parseMarkup(cell).replace(/\n/g,'<br>');r.appendChild(td);});
+    tbody.appendChild(r);
+  });
+  table.appendChild(tbody); wrap.appendChild(table); return wrap;
+}
+function buildKPI(kpis){
+  const row = el('div','kpi-row');
+  kpis.forEach(k => {
+    const card = el('div','kpi-card '+k.theme);
+    card.innerHTML = '<div class="kpi-num counter-num">'+k.num+'</div><div class="kpi-label">'+k.label+'</div>';
+    row.appendChild(card);
+  });
+  return row;
+}
+function buildChartBox(cfg){
+  const box = el('div','chart-box');
+  box.innerHTML = '<h4>'+cfg.title+'</h4>';
+  const inner = el('div','chart-inner'); inner.id=cfg.id; inner.style.height=(cfg.height||400)+'px';
+  box.appendChild(inner); return box;
+}
+
+// ═══ COMPONENT BUILDERS ═══
+function buildProgressGrid(rows){
+  const grid = el('div','prog-grid');
+  rows.forEach(r => {
+    const row = el('div','prog-row');
+    row.innerHTML = '<div class="prog-label">'+r.label+'</div>'+
+      '<div class="prog-item"><div class="prog-track"><div class="prog-fill xy" data-pct="'+r.xy+'"></div></div><div class="prog-val xy">'+r.xy+'%</div></div>'+
+      '<div class="prog-item"><div class="prog-track"><div class="prog-fill jd" data-pct="'+r.jd+'"></div></div><div class="prog-val jd">'+r.jd+'%</div></div>'+
+      '<div class="prog-item"><div class="prog-track"><div class="prog-fill tm" data-pct="'+r.tm+'"></div></div><div class="prog-val tm">'+r.tm+'%</div></div>';
+    grid.appendChild(row);
+  });
+  return grid;
+}
+function buildCaseCards(cases){
+  const grid = el('div','case-grid');
+  cases.forEach(c => {
+    const card = el('div','case-card');
+    card.innerHTML = '<div class="case-bar '+c.pid+'"></div><div class="case-body">'+
+      '<div class="case-title">'+parseMarkup(c.title)+'</div>'+
+      '<div class="case-story">'+parseMarkup(c.story)+'</div>'+
+      '<div class="case-meta">'+
+        '<span class="case-badge '+(c.verdict==='成功'?'win':c.verdict==='失败'?'lose':'partial')+'">'+c.verdict+'</span>'+
+        (c.severity?'<span class="case-badge severe">'+c.severity+'</span>':'')+
+        (c.notable?'<span class="case-badge notable">'+c.notable+'</span>':'')+
+        '<span class="case-amount">'+c.amount+'</span>'+
+      '</div></div>';
+    grid.appendChild(card);
+  });
+  return grid;
+}
+function buildFlowTopo(columns){
+  const topo = el('div','flow-topo');
+  columns.forEach((col,i) => {
+    if(i>0){ const arrow = el('div','flow-arrow','→'); topo.appendChild(arrow); }
+    const colDiv = el('div','flow-col');
+    colDiv.innerHTML = '<div class="flow-col-header">'+parseMarkup(col.header)+'</div>';
+    col.nodes.forEach(n => {
+      const node = el('div','flow-node'+(n.type==='pain'?' pain':n.type==='good'?' good':''));
+      node.innerHTML = '<div class="flow-icon">'+n.icon+'</div><div class="flow-title">'+parseMarkup(n.title)+'</div><div class="flow-detail">'+parseMarkup(n.detail)+'</div>';
+      colDiv.appendChild(node);
+    });
+    topo.appendChild(colDiv);
+  });
+  return topo;
+}
+function buildSentimentBars(bars){
+  const wrap = el('div',''); wrap.style.margin='20px 0';
+  bars.forEach(b => {
+    const row = el('div','senti-bar-wrap');
+    row.innerHTML = '<div class="senti-label">'+b.label+'</div>'+
+      '<div class="senti-track">'+
+        '<div class="senti-seg hi" style="width:'+(b.hi||0)+'%"></div>'+
+        '<div class="senti-seg mid" style="width:'+(b.mid||0)+'%"></div>'+
+        '<div class="senti-seg lo" style="width:'+(b.lo||0)+'%"></div>'+
+      '</div>'+
+      '<div class="senti-score" style="color:'+b.color+'">'+b.score+'</div>';
+    wrap.appendChild(row);
+  });
+  return wrap;
+}
+
+
+// ═══ CONTENT FLOW BUILDER — 图文混排内容流（支持 text / image / chart） ═══
+function buildContentFlow(content, sectionCharts){
+  const flow = el('div','content-flow');
+  const chartLookup = {};
+  if (sectionCharts) sectionCharts.forEach(c => { chartLookup[c.id] = c; });
+  content.forEach(item => {
+    if (item.type === 'text') {
+      flow.appendChild(el('div','content-text', parseMarkup(item.value)));
+    }
+    else if (item.type === 'image') {
+      const wrapper = el('div','content-image');
+      if (item._error) {
+        wrapper.style.cssText = 'padding:32px;text-align:center;color:var(--red);cursor:default';
+        wrapper.innerHTML = '⚠️ 图片加载失败: ' + item._error;
+      } else if (item.src) {
+        const img = document.createElement('img');
+        img.src = item.src; img.alt = item.alt || ''; img.loading = 'lazy';
+        if (item.maxWidth) img.style.maxWidth = item.maxWidth + 'px';
+        img.addEventListener('click', function(e){ openLightbox(item.src, item.caption); e.stopPropagation(); });
+        wrapper.appendChild(img);
+        if (item.caption) wrapper.appendChild(el('div','content-caption', item.caption));
+      }
+      flow.appendChild(wrapper);
+    }
+    else if (item.type === 'chart') {
+      const cfg = chartLookup[item.ref];
+      if (cfg) flow.appendChild(buildChartBox(cfg));
+    }
+  });
+  return flow;
+}
+
+// ═══ LIGHTBOX ═══
+function createLightbox(){
+  const overlay = el('div','lightbox-overlay'); overlay.id = 'lightbox-overlay';
+  const img = document.createElement('img'); img.id = 'lightbox-img';
+  const closeBtn = el('div','lightbox-close','✕');
+  const caption = el('div','lightbox-caption'); caption.id = 'lightbox-caption';
+  closeBtn.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay || e.target === closeBtn) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLightbox(); });
+  overlay.appendChild(closeBtn); overlay.appendChild(img); overlay.appendChild(caption);
+  document.body.appendChild(overlay);
+}
+function openLightbox(src, captionText){
+  const overlay = document.getElementById('lightbox-overlay');
+  if (!overlay) return;
+  document.getElementById('lightbox-img').src = src;
+  const cap = document.getElementById('lightbox-caption');
+  cap.textContent = captionText || '';
+  cap.style.display = captionText ? '' : 'none';
+  overlay.classList.add('open');
+}
+function closeLightbox(){
+  const overlay = document.getElementById('lightbox-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+function initLightbox(){ createLightbox(); }
+// ═══ Build SECTIONS ═══
+const main = document.getElementById('main-content');
+R.sections.forEach(s => {
+  const sec = el('section','section'); sec.id = s.id;
+  sec.innerHTML = '<div class="container"><div class="section-header"><div class="section-num">'+s.num+'</div><div class="section-title">'+s.title+'</div><p class="section-desc">'+parseMarkup(s.desc)+'</p><div class="section-divider"></div></div></div>';
+  const container = sec.querySelector('.container');
+
+  if (s.content && s.content.length > 0) {
+    container.appendChild(buildContentFlow(s.content, s.charts));
+    if (s.kpis) container.appendChild(buildKPI(s.kpis));
+  } else {
+    if(s.charts){ s.charts.forEach(cfg => container.appendChild(buildChartBox(cfg))); }
+    if(s.kpis){ container.appendChild(buildKPI(s.kpis)); }
+    if(s.platforms){
+      s.platforms.forEach(p => {
+        container.appendChild(buildPlatformHeader(p.pid,p.header,p.hdesc));
+        if(p.insight) container.appendChild(buildInsight(p.insight,p.pid));
+        if(p.features) container.appendChild(buildFeatureGrid(p.features,p.pid));
+        if(p.timeline) container.appendChild(buildTimeline(p.timeline,p.pid));
+      });
+    }
+    if(s.progressRows) container.appendChild(buildProgressGrid(s.progressRows));
+    if(s.cases) container.appendChild(buildCaseCards(s.cases));
+    if(s.flowTopo) container.appendChild(buildFlowTopo(s.flowTopo));
+    if(s.sentimentBars) container.appendChild(buildSentimentBars(s.sentimentBars));
+    if(s.comparison){
+      const h4 = el('h4',''); h4.style.cssText='margin-top:32px;color:#f0ece4;font-size:16px'; h4.textContent='核心差异一览';
+      container.appendChild(h4);
+      container.appendChild(buildComparisonTable(s.comparison));
+    }
+  }
+  main.appendChild(sec);
+});
+// ═══ Build OVERVIEW ═══
+(function buildOverview(){
+  const ovSec = el('section','section'); ovSec.id='overview';
+  ovSec.innerHTML = '<div class="container"><div class="section-header"><div class="section-num">Overview</div><div class="section-title">报告导读：三平台战略定位图谱</div><p class="section-desc">在深入各个维度之前，先建立全局认知。三个平台不是在同一个维度上竞争，而是在不同的维度上做不可替代的事。</p></div></div>';
+  const ctr = ovSec.querySelector('.container');
+  if(R.overview.charts){ R.overview.charts.forEach(cfg => ctr.appendChild(buildChartBox(cfg))); }
+  if(R.overview.insight){ ctr.appendChild(buildInsight(R.overview.insight)); }
+  main.insertBefore(ovSec, main.firstChild);
+})();
+
+// ═══ Build CONCLUSION ═══
+(function buildConclusion(){
+  const cDiv = document.getElementById('conclusion-content');
+  cDiv.innerHTML = '<div class="section-header"><div class="section-num" style="color:#ffc402">Conclusion</div><div class="section-title">结语：三个平台的本质</div><p class="section-desc">三平台的根本差异不在于某个具体规则或功能的有无，而在于它们的"基因"——三个平台演化成了三种截然不同的物种。</p><div class="section-divider" style="background:#ffc402"></div></div>';
+
+  if(R.conclusion){
+    if(R.conclusion.cards){
+      const grid = el('div','conc-grid');
+      R.conclusion.cards.forEach(c => {
+        const p = R.platforms.find(pp=>pp.id===c.pid);
+        const card = el('div','conc-card '+c.pid);
+        card.innerHTML = '<div class="conc-top"><h4>'+p.name+'</h4><div class="conc-tag">'+parseMarkup(c.tag)+'</div></div><div class="conc-body"><strong>"'+parseMarkup(c.essence)+'"</strong><br><br>'+parseMarkup(c.detail)+'</div>';
+        grid.appendChild(card);
+      });
+      cDiv.appendChild(grid);
+    }
+    if(R.conclusion.insight){ cDiv.appendChild(buildInsight(R.conclusion.insight)); }
+  }
+})();
+
+// ═══ Build FOOTER ═══
+document.getElementById('footer').innerHTML = '<p>'+R.meta.title+' · '+R.meta.date+'</p><p style="margin-top:4px">'+R.meta.footer+'</p>';
+
+// ═══ INIT CHARTS ═══
+function initAllCharts(){
+  const allCharts = [];
+  if(R.overview.charts) allCharts.push(...R.overview.charts);
+  R.sections.forEach(s => { if(s.charts) allCharts.push(...s.charts); });
+
+  allCharts.forEach(cfg => {
+    const dom = document.getElementById(cfg.id);
+    if(!dom) return;
+    const chart = echarts.init(dom);
+    let opts = {...baseOpts()};
+
+    if(cfg.type==='scatter'){
+      opts.grid = {left:70,right:30,top:40,bottom:50};
+      opts.xAxis = {name:cfg.xLabel,nameLocation:'center',nameGap:32,nameTextStyle:{fontSize:11,color:'#9491a0'},min:0,max:10,...lightTheme};
+      opts.yAxis = {name:cfg.yLabel,nameLocation:'center',nameGap:40,nameTextStyle:{fontSize:11,color:'#9491a0'},min:0,max:10,...lightTheme};
+      opts.series = [{
+        type:'scatter',symbolSize:cfg.points.map(p=>p.size||20),
+        data:cfg.points.map(p=>[p.x,p.y]),
+        itemStyle:{color:params=>cfg.points[params.dataIndex].color,opacity:.9},
+        label:{show:true,position:'top',distance:14,fontSize:12,fontWeight:'bold',
+          color:params=>cfg.points[params.dataIndex].color,
+          formatter:params=>cfg.points[params.dataIndex].name}
+      }];
+    }
+
+    if(cfg.type==='radar'){
+      opts.radar = {center:['50%','52%'],radius:'62%',
+        indicator:cfg.dims.map(d=>({name:d,max:5})),
+        axisName:{fontSize:11,fontWeight:'bold',color:'#9491a0'},
+        splitArea:{areaStyle:{color:['rgba(255,255,255,.01)','rgba(255,255,255,.025)']}},
+        ...{splitLine:{lineStyle:{color:'#1e2130'}},axisLine:{lineStyle:{color:'#1e2130'}}}};
+      opts.legend = {data:cfg.series.map(s=>s.name),bottom:0,textStyle:{color:'#9491a0',fontSize:12}};
+      opts.series = [{type:'radar',data:cfg.series.map(s=>({
+        value:s.data,name:s.name,
+        areaStyle:{color:s.color+'1F'},
+        lineStyle:{color:s.color,width:2},itemStyle:{color:s.color}
+      }))}];
+    }
+
+    if(cfg.type==='hbar'){
+      opts.grid = {left:130,right:50,top:20,bottom:30};
+      opts.xAxis = {name:'',nameTextStyle:{fontSize:11,color:'#9491a0'},...lightTheme};
+      opts.yAxis = {type:'category',data:cfg.categories,axisLabel:{fontSize:10,fontWeight:'bold',color:'#9491a0'},...lightTheme};
+      opts.legend = {data:cfg.series.map(s=>s.name),bottom:0,textStyle:{color:'#9491a0',fontSize:12}};
+      opts.series = cfg.series.map(s => ({
+        name:s.name,type:'bar',data:s.data,
+        itemStyle:{color:s.color,borderRadius:[0,6,6,0]},
+        label:{show:true,position:'right',fontSize:10,fontWeight:'bold',color:s.color,
+          formatter:p=>p.value===null?'N/A':(p.value<1?(p.value<0.1?'即时':p.value+'h'):p.value+'天')}
+      }));
+    }
+
+    if(cfg.type==='bar'){
+      opts.grid = {left:60,right:30,top:50,bottom:50};
+      opts.xAxis = {type:'category',data:cfg.categories,axisLabel:{fontSize:10,fontWeight:'bold',color:'#9491a0',interval:0},...lightTheme};
+      opts.yAxis = {name:'',nameTextStyle:{fontSize:11,color:'#9491a0'},...lightTheme};
+      opts.legend = {data:cfg.series.map(s=>s.name),bottom:0,textStyle:{color:'#9491a0',fontSize:12}};
+      opts.series = cfg.series.map(s => ({
+        name:s.name,type:'bar',data:s.data,
+        itemStyle:{color:s.color,opacity:.88,borderRadius:[6,6,0,0]},
+        label:{show:true,position:'top',distance:8,fontSize:10,fontWeight:'bold',color:s.color}
+      }));
+    }
+
+    if(cfg.type==='dualbar'){
+      opts.grid = {left:70,right:70,top:40,bottom:40};
+      opts.xAxis = {type:'category',data:cfg.categories,axisLabel:{fontSize:11,fontWeight:'bold',color:'#9491a0'},...lightTheme};
+      opts.yAxis = [{name:'',nameTextStyle:{fontSize:10,color:'#9491a0'},...lightTheme},{name:'',nameTextStyle:{fontSize:10,color:'#9491a0'},...lightTheme}];
+      opts.legend = {data:[cfg.seriesA.name,cfg.seriesB.name],bottom:0,textStyle:{color:'#9491a0',fontSize:12}};
+      opts.series = [
+        {name:cfg.seriesA.name,type:'bar',barGap:'30%',data:cfg.seriesA.data,itemStyle:{color:params=>cfg.seriesA.colors[params.dataIndex],borderRadius:[6,6,0,0]},label:{show:true,position:'top',distance:8,fontSize:11,fontWeight:'bold',color:params=>cfg.seriesA.colors[params.dataIndex]}},
+        {name:cfg.seriesB.name,type:'bar',yAxisIndex:1,data:cfg.seriesB.data,itemStyle:{color:params=>cfg.seriesB.colors[params.dataIndex],borderRadius:[6,6,0,0],opacity:.6},label:{show:true,position:'top',distance:8,fontSize:11,fontWeight:'bold',color:params=>cfg.seriesA.colors[params.dataIndex]}}
+      ];
+    }
+
+    // ═══ LINE CHART FACTORY ═══
+    if(cfg.type==='line'){
+      opts.grid = {left:55,right:30,top:30,bottom:40};
+      opts.xAxis = {type:'category',data:cfg.categories,axisLabel:{fontSize:10,fontWeight:'bold',color:'#9491a0'},boundaryGap:false,...lightTheme};
+      opts.yAxis = {name:cfg.yLabel||'',nameTextStyle:{fontSize:11,color:'#9491a0'},...lightTheme};
+      opts.legend = {data:cfg.series.filter(s=>!s.isMark).map(s=>s.name),bottom:0,textStyle:{color:'#9491a0',fontSize:12}};
+      opts.series = cfg.series.map(s => {
+        if(s.isMark){
+          return {name:s.name,type:'line',data:s.data,
+            lineStyle:{color:s.color,type:'dashed',width:1.5,opacity:.7},
+            itemStyle:{color:s.color},symbol:'none',
+            label:{show:true,position:'right',fontSize:10,color:s.color}};
+        }
+        return {name:s.name,type:'line',data:s.data,
+          lineStyle:{color:s.color,width:3},itemStyle:{color:s.color},
+          symbol:'circle',symbolSize:8,
+          areaStyle:s.area?{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+            {offset:0,color:s.color+'40'},{offset:1,color:s.color+'00'}
+          ])}:undefined,
+          label:{show:true,position:'top',fontSize:11,fontWeight:'bold',color:s.color,distance:8}};
+      });
+    }
+
+    chart.setOption(opts);
+  });
+}
+
+// ═══ PROGRESS BAR SCROLL ANIMATION ═══
+function initProgressAnim(){
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.prog-fill').forEach(f => {
+          const pct = parseFloat(f.getAttribute('data-pct')||'0');
+          f.style.transform = 'scaleX('+(Math.min(pct,100)/100)+')';
+        });
+      }
+    });
+  },{threshold:0.2});
+  document.querySelectorAll('.prog-grid').forEach(g => observer.observe(g));
+}
+
+// ═══ SCROLL ANIMATIONS ═══
+function initScrollAnim(){
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); }});
+  },{threshold:0.12});
+  document.querySelectorAll('.section,.hero,.card,.insight,.kpi-card,.feat-card,.conc-card,.chart-box,.platform-header,.case-card,.flow-node,.prog-row').forEach(el => {el.classList.add('anim');observer.observe(el);});
+}
+
+// ═══ NAV SCROLL HIGHLIGHT ═══
+function initNavHighlight(){
+  window.addEventListener('scroll',()=>{
+    const sy = window.scrollY+80;
+    document.querySelectorAll('.nav a').forEach(a => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target && target.offsetTop <= sy && target.offsetTop+target.offsetHeight > sy) a.classList.add('active');
+      else a.classList.remove('active');
+    });
+  });
+}
+
+// ═══ SELF-VALIDATION BADGE ═══
+(function addValidationBadge(){
+  const errors = [];
+  if (!R || !R.meta || !R.meta.title) errors.push('Missing R.meta.title');
+  if (!R.platforms || !Array.isArray(R.platforms) || R.platforms.length < 2) errors.push('Need ≥2 platforms');
+  if (!R.sections || !Array.isArray(R.sections) || R.sections.length === 0) errors.push('No sections');
+  if (!R.conclusion || !R.conclusion.insight) errors.push('Missing conclusion');
+
+  const badge = document.createElement('div');
+  badge.id = 'validation-badge';
+  badge.style.cssText = 'position:fixed;bottom:12px;right:12px;padding:5px 14px;border-radius:20px;font-size:10px;font-weight:700;z-index:9999;pointer-events:none;letter-spacing:.3px;';
+  if (errors.length === 0) {
+    badge.textContent = '✅ Schema Valid';
+    badge.style.background = 'rgba(0,200,100,.08)';
+    badge.style.color = '#00c864';
+    badge.style.border = '1px solid rgba(0,200,100,.15)';
+  } else {
+    badge.textContent = '❌ ' + errors[0];
+    badge.style.background = 'rgba(255,80,80,.08)';
+    badge.style.color = '#ff5050';
+    badge.style.border = '1px solid rgba(255,80,80,.15)';
+  }
+  document.body.appendChild(badge);
+})();
+
+// ═══ LAUNCH ═══
+window.addEventListener('DOMContentLoaded',()=>{
+  initLightbox();
+  initAllCharts();
+  initScrollAnim();
+  initNavHighlight();
+  initProgressAnim();
+});
+window.addEventListener('resize',()=>{
+  document.querySelectorAll('.chart-inner').forEach(el => {const c=echarts.getInstanceByDom(el);if(c)c.resize();});
+});
+</script>
+</body>
+</html>
