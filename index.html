@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JustJob · 调研报告</title>
+<style>
+:root{
+  --bg:#faf8f5; --card:#f5f2ed; --border:#d9d3c8;
+  --text:#1a1a1a; --muted:#8c8c8c; --green:#2d5a4b; --gold:#c9a962;
+  --font-serif:Georgia,"Times New Roman","Noto Serif SC",serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh}
+.hero{padding:80px 24px 48px;text-align:center;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--card) 0%,var(--bg) 100%)}
+.hero::before{content:'';display:block;width:40px;height:2px;background:var(--green);margin:0 auto 24px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--text);letter-spacing:-.5px}
+.hero p{color:var(--muted);margin-top:8px;font-size:14px}
+.container{max-width:720px;margin:0 auto;padding:40px 28px}
+.file-list{display:flex;flex-direction:column;gap:12px}
+.file-card{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:var(--card);border:1px solid var(--border);border-radius:6px;text-decoration:none;color:var(--text);transition:all .15s ease}
+.file-card:hover{border-color:#b0a894;transform:translateY(-1px);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.file-card .name{font-weight:600;font-size:15px;font-family:var(--font-serif)}
+.file-card .meta{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.file-card .arrow{color:var(--green);font-size:18px}
+.file-card .tag{padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600;background:rgba(45,90,75,.08);color:var(--green)}
+.footer{padding:32px;text-align:center;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>JustJob · 调研报告</h1>
+  <p>点击下方文件即可在线查看</p>
+</div>
+<div class="container">
+  <div class="file-list" id="list"></div>
+</div>
+<div class="footer">JustJob Report Archive</div>
+<script>
+const files = [
+  { name:'FinChip 售后架构设计', slug:'finchip-aftersales', date:'2026-07-20', tag:'架构设计' },
+  // 以后加新报告在这里加一行就行
+];
+const list = document.getElementById('list');
+files.forEach(f => {
+  const a = document.createElement('a');
+  a.className = 'file-card';
+  a.href = f.slug + '.html';
+  a.innerHTML = '<span class="name">' + f.name + '</span>' +
+    '<span class="meta"><span class="tag">' + f.tag + '</span>' + f.date + ' <span class="arrow">→</span></span>';
+  list.appendChild(a);
+});
+</script>
+</body>
+</html>
